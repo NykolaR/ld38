@@ -1,0 +1,100 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://scripts/level.gd" type="Script" id=1]
+[ext_resource path="res://scenes/world.scn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/objects/ring.scn" type="PackedScene" id=3]
+
+[sub_resource type="Animation" id=1]
+
+resource/name = "day"
+length = 24.0
+loop = true
+step = 6.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("sun:colors/diffuse")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 6, 12, 18, 24 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.126953, 0.239792, 0.625, 1 ), Color( 0.710938, 0.898376, 1, 1 ), Color( 0.958832, 1, 0.722656, 1 ), Color( 0.710938, 0.898376, 1, 1 ), Color( 0.126953, 0.239792, 0.625, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sun:colors/specular")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 6, 12, 18, 24 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.84375, 1, 0.956055, 1 ), Color( 1, 1, 1, 1 ), Color( 0.84375, 1, 0.956055, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("sun:params/attenuation")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = {
+"times": FloatArray( 0, 6, 18, 24 ),
+"transitions": FloatArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.5, 0.5, 1.0 ]
+}
+
+[node name="world_1" type="Spatial"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+script/script = ExtResource( 1 )
+
+[node name="world" parent="." instance=ExtResource( 2 )]
+
+[node name="sun" type="OmniLight" parent="."]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+layers = 1
+params/enabled = true
+params/editor_only = false
+params/bake_mode = 0
+params/energy = 1.5
+colors/diffuse = Color( 0.126953, 0.239792, 0.625, 1 )
+colors/specular = Color( 1, 1, 1, 1 )
+shadow/shadow = true
+shadow/darkening = 0.0
+shadow/z_offset = 0.001
+shadow/z_slope_scale = 0.0
+shadow/esm_multiplier = 60.0
+shadow/blur_passes = 1.0
+projector = null
+operator = 0
+params/radius = 4.0
+params/attenuation = 1.0
+
+[node name="rings" type="Spatial" parent="."]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="ring1" parent="rings" instance=ExtResource( 3 )]
+
+transform/local = Transform( 1.5, 0, 0, 0, -2.44381e-07, -1.5, 0, 1.5, -2.44381e-07, 0, 0.748657, 2.01699 )
+
+[node name="ring2" parent="rings" instance=ExtResource( 3 )]
+
+transform/local = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0.525177, 2.03283, -0.26245 )
+
+[node name="ring" parent="rings" instance=ExtResource( 3 )]
+
+transform/local = Transform( 1, 0, 0, 0, 0.566074, 0.824354, 0, -0.824354, 0.566074, -0.254502, 1.30154, -2.1625 )
+
+[node name="animation" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/day = SubResource( 1 )
+playback/active = true
+playback/speed = 0.3
+blend_times = [  ]
+autoplay = "day"
+
+
